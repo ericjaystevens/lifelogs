@@ -1,10 +1,17 @@
 using System;
+using Microsoft.Azure.Cosmos.Table;
 
 namespace backend
 {
+	public class LogEntry : TableEntity
+	{
+		public DateTime createdTime { get; set; }
+
+		public string text { get; set; }
+	}
 	public class Log
 	{
-		public string Id { get; set; } = Guid.NewGuid().ToString();
+		public string Id { get; set; } = (DateTime.MaxValue.Ticks - DateTime.UtcNow.Ticks).ToString("d19");
 
 		public DateTime createdTime { get; set; } = DateTime.UtcNow;
 
@@ -22,14 +29,14 @@ namespace backend
 		{
 			return new LogEntry
 			{
-			PartitionKey = "TODO",
+			PartitionKey = "LogEntry",
 			RowKey = log.Id,
 			createdTime = log.createdTime,
 			text = log.text
 			};
 		}
 
-		public static Log ToTodo(this LogEntry logEntry)
+		public static Log ToLogEntries(this LogEntry logEntry)
 		{
 			return new Log
 			{
