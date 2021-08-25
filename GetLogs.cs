@@ -10,6 +10,7 @@ namespace backend
 {
 	public static class GetRecentLogs
 	{
+
 		[FunctionName("GetRecentLogs")]
 		public static async Task<IActionResult> getAll(
 			[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
